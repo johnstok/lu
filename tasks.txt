@@ -1,0 +1,18 @@
+1.0.0
+- GPL3 license
+- Recurse into directories with -r
+- Option parsing
+- Default to . if no path is provided
+- Handles ~ for home directories
+- Include licenses for dependencies
+  Error handling
+  Javadoc and formatting
+  Shell script for linux / OSX
+  Standalone pom
+  Distribution with binary; docs; shell scripts
+  Help printed on invalid param
+
+Future
+  Batch file for win32
+  Verbose mode that prints debug info
+  Help printed on -h switch
