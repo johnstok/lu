@@ -1,0 +1,33 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>distribution</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+    <files>
+        <file>
+            <source>distribution/lu.sh</source>
+            <fileMode>0755</fileMode>
+        </file>
+        <file>
+            <source>target/${project.name}-${project.version}-jar-with-dependencies.jar</source>
+            <destName>${project.name}.jar</destName>
+            <fileMode>0644</fileMode>
+        </file>
+        <file>
+            <source>target/generated-sources/license/THIRD-PARTY.txt</source>
+            <fileMode>0644</fileMode>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+            <directory>distribution/licenses</directory>
+            <outputDirectory>licenses</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
