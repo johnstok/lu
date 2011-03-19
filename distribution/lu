@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cpd=`dirname "$0"`
+java -cp $cpd/lu.jar iaj.linkit.App $*

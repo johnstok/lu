@@ -16,23 +16,44 @@
  */
 package iaj.linkit;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
+
+/**
+ * Command line configuration.
+ *
+ * @author Keith Webster Johnston.
+ */
 public class Configuration {
 
-	@Option(name="-r", usage="Recurse into sub-directories.")
-	private boolean _recursive;
-	
-	@Argument(multiValued=true, usage="Zero or more file-system paths")
-    private List<String> _paths = new ArrayList<String>();
-	
-	
-	public boolean isRecursive() {  return _recursive; }
-	
-	
-	public List<String> getPaths() { return _paths; }
+    @Option(name = "-r", usage = "Recurse into sub-directories.")
+    private boolean _recursive;
+
+    @Argument(multiValued = true, usage = "Zero or more file-system paths")
+    private final List<String> _paths = new ArrayList<String>();
+
+
+    /**
+     * Accessor.
+     *
+     * @return True if the app should recurse into sub-directories; false
+     *  otherwise.
+     */
+    public boolean isRecursive() {
+        return _recursive;
+    }
+
+
+    /**
+     * Accessor.
+     *
+     * @return The paths to scan for URLs.
+     */
+    public List<String> getPaths() {
+        return _paths;
+    }
 }

@@ -5,12 +5,12 @@
 - Default to . if no path is provided
 - Handles ~ for home directories
 - Include licenses for dependencies
-  Error handling
-  Javadoc and formatting
-  Shell script for linux / OSX
-  Standalone pom
-  Distribution with binary; docs; shell scripts
-  Help printed on invalid param
+- Error handling
+- Javadoc and formatting
+- Shell script for linux / OSX
+- Standalone pom
+- Distribution with binary; docs; shell scripts
+- Help printed on invalid param
 
 Future
   Batch file for win32

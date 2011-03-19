@@ -1,18 +1,39 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
 	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<artifactId>defaults</artifactId>
-		<groupId>iaj.server</groupId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
-
-	<artifactId>link-it</artifactId>
-	<name>link-it</name>
-	<version>1.0.0-SNAPSHOT</version>
+	
+	<groupId>com.johnstok</groupId>
+	<artifactId>lu</artifactId>
+	<name>lu</name>
+	<version>1.0.0</version>
+    <url>https://github.com/johnstok/lu</url>
+    
+    <properties>
+        <lib.version.junit>4.0</lib.version.junit>
+        <lib.version.args4j>2.0.12</lib.version.args4j>
+        <lib.version.commons-configuration>1.6</lib.version.commons-configuration>
+        
+        <plugin.version.license-maven-plugin>1.0-SNAPSHOT</plugin.version.license-maven-plugin>
+        <plugin.version.maven-assembly-plugin>2.2</plugin.version.maven-assembly-plugin>
+        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+    
+    <repositories>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+    </repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -28,11 +49,17 @@
 	</pluginRepositories>
 	
 	<build>
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>1.0-SNAPSHOT</version>
+				<version>${plugin.version.license-maven-plugin}</version>
 				<executions>
 					<execution>
 						<id>third-part</id>
@@ -47,19 +74,75 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>
+                                true
+                            </addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgument>-Xlint</compilerArgument>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
 		</plugins>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>commons-configuration</groupId>
 			<artifactId>commons-configuration</artifactId>
-			<version>1.6</version>
+			<version>${lib.version.commons-configuration}</version>
 		</dependency>
 		<dependency>
 			<groupId>args4j</groupId>
 			<artifactId>args4j</artifactId>
-			<version>2.0.12</version>
+			<version>${lib.version.args4j}</version>
 		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${lib.version.junit}</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<profiles>
@@ -69,7 +152,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.2</version>
+						<version>${plugin.version.maven-assembly-plugin}</version>
 						<executions>
 							<execution>
 								<id>make-binary</id>
@@ -88,6 +171,19 @@
 									</descriptorRefs>
 								</configuration>
 							</execution>
+                            <execution>
+                                <id>make-distribution</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <descriptors>
+                                        <descriptor>distribution.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
 						</executions>
 					</plugin>
 				</plugins>
